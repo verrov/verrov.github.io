@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERRO — тренируйся свободно</title>
-<meta name="description" content="VERRO 2.0 — офлайн-трекер тренировок. GPS телефона, блютуз-датчики, режим без GPS, 3D-реплеи, голосовой тренер. Без аккаунтов и облаков.">
+<meta name="description" content="VERRO 3.1 — офлайн-трекер тренировок. GPS телефона, блютуз-датчики, режим без GPS, 3D-реплеи, голосовой тренер. Без аккаунтов и облаков.">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="%23063220"/><path d="M16 44 L32 20 L48 44 Z" fill="%233DF29B"/></svg>'>
 <style>
 :root{
@@ -27,11 +27,52 @@ body{font-family:-apple-system,"SF Pro Display","SF Pro Text","Segoe UI",system-
 a{color:inherit;text-decoration:none}
 ::-webkit-scrollbar{width:9px}
 ::-webkit-scrollbar-track{background:#000}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.13);border-radius:99px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(61,242,155,.4)}
 :focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:8px}
 section{scroll-margin-top:96px}
 .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+
+/* ==================================================
+   LIQUID GLASS · тёмная серия (фон строго чёрный,
+   стекло читается гранями, подсветкой и бликами)
+   ================================================== */
+.glass{position:relative;
+  background:linear-gradient(160deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 38%,rgba(255,255,255,.05));
+  box-shadow:0 18px 44px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -1px 0 rgba(255,255,255,.05),
+    inset 1px 0 0 rgba(255,255,255,.06),
+    inset -1px 0 0 rgba(255,255,255,.06)}
+.glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.2px;
+  background:linear-gradient(160deg,rgba(255,255,255,.6),rgba(255,255,255,.07) 30%,rgba(255,255,255,.02) 55%,rgba(255,255,255,.3));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.glass::after{content:'';position:absolute;inset:0;border-radius:inherit;opacity:0;
+  transition:opacity .5s var(--ease);pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,20%),rgba(255,255,255,.09),transparent 62%)}
+.glass:hover::after{opacity:1}
+.glass.tiltable{transition:transform .35s var(--spring)}
+.r-m{border-radius:30px}.r-l{border-radius:36px}.r-xl{border-radius:44px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;
+  font-weight:800;font-size:.95rem;cursor:pointer;border:none;overflow:hidden;position:relative;
+  transition:box-shadow .4s var(--ease),transform .35s var(--spring);will-change:transform}
+.btn.primary{background:var(--grad);color:#012517;
+  box-shadow:0 10px 36px rgba(43,194,106,.4),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn.primary:hover{box-shadow:0 20px 56px rgba(43,194,106,.6),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn.primary:active{transform:scale(.96)}
+.btn.primary::after{content:'';position:absolute;top:0;left:-90%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg);transition:.7s}
+.btn.primary:hover::after{left:140%}
+.btn.glassb{color:var(--text);
+  background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 0 1px rgba(255,255,255,.12),
+    0 10px 30px rgba(0,0,0,.45)}
+.btn.glassb:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(61,242,155,.35),
+    0 14px 36px rgba(0,0,0,.5)}
+.btn.small{padding:11px 20px;font-size:.85rem}
 
 /* ============ ПРЕЛОАДЕР ============ */
 #loader{position:fixed;inset:0;z-index:300;background:#000;display:flex;
@@ -39,7 +80,8 @@ section{scroll-margin-top:96px}
   transition:transform .8s cubic-bezier(.76,0,.24,1)}
 #loader.done{transform:translateY(-101%)}
 #loader .word{display:flex;gap:.04em;font-size:clamp(2.6rem,7vw,4.4rem);font-weight:800;letter-spacing:.3em;overflow:hidden}
-#loader .word span{display:inline-block;transform:translateY(115%);animation:lin .7s var(--ease) forwards}
+#loader .word span{display:inline-block;transform:translateY(115%);animation:lin .7s var(--ease) forwards;
+  background:linear-gradient(180deg,#fff,#9FE8C4);-webkit-background-clip:text;background-clip:text;color:transparent}
 #loader .word span:nth-child(2){animation-delay:.06s}
 #loader .word span:nth-child(3){animation-delay:.12s}
 #loader .word span:nth-child(4){animation-delay:.18s}
@@ -59,46 +101,23 @@ body.cursor-on{cursor:none}
 body.cursor-on a,body.cursor-on .cc{cursor:none}
 body.cursor-on #cur-dot,body.cursor-on #cur-ring{display:block}
 
-/* ============ СТЕКЛО ============ */
-.lg{position:relative;border-radius:30px;
-  background:linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.13)}
-.lg::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;
-  background:linear-gradient(150deg,rgba(255,255,255,.26),rgba(255,255,255,.04) 45%,rgba(255,255,255,.11));
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-
-.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;
-  font-weight:800;font-size:.95rem;text-decoration:none;cursor:pointer;border:none;overflow:hidden;
-  transition:box-shadow .4s var(--ease),transform .35s var(--spring);will-change:transform}
-.btn.primary{background:var(--grad);color:#012517;
-  box-shadow:0 10px 36px rgba(43,194,106,.4),inset 0 1px 0 rgba(255,255,255,.4)}
-.btn.primary:hover{box-shadow:0 20px 56px rgba(43,194,106,.6),inset 0 1px 0 rgba(255,255,255,.4)}
-.btn.primary:active{transform:scale(.96)}
-.btn.primary::after{content:'';position:absolute;top:0;left:-90%;width:45%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
-  transform:skewX(-20deg);transition:.7s}
-.btn.primary:hover::after{left:140%}
-.btn.ghost{background:rgba(255,255,255,.06);color:var(--text);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 0 0 1px rgba(255,255,255,.14)}
-.btn.ghost:hover{background:rgba(61,242,155,.09)}
-.btn.small{padding:11px 20px;font-size:.85rem}
-
-/* ============ ШАПКА ============ */
+/* ============ ШАПКА — стеклянная пилюля ============ */
 header{position:fixed;top:14px;left:0;right:0;z-index:100;padding:0 16px}
 .nav{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:18px;height:64px;
   padding:0 10px 0 16px;border-radius:999px;
-  background:rgba(0,0,0,.45);backdrop-filter:blur(24px) saturate(160%);
-  -webkit-backdrop-filter:blur(24px) saturate(160%);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09),inset 0 1px 0 rgba(255,255,255,.1);
-  transition:background .4s}
-header.sc .nav{background:rgba(0,0,0,.78)}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
-.brand svg{width:40px;height:40px;border-radius:14px;transition:.4s var(--spring)}
+  background:linear-gradient(180deg,rgba(20,26,23,.72),rgba(10,14,12,.66));
+  backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 14px 40px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.07)}
+.brand{display:flex;align-items:center;gap:11px}
+.brand svg{width:40px;height:40px;border-radius:14px;transition:.4s var(--spring);
+  box-shadow:0 6px 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2)}
 .brand:hover svg{transform:rotate(-8deg) scale(1.06)}
 .brand-name{font-weight:800;letter-spacing:.3em;font-size:.98rem;color:var(--text)}
-nav.links{display:flex;gap:4px;margin-left:auto}
-nav.links a{color:var(--muted);text-decoration:none;font-size:.87rem;font-weight:700;
+nav.links{display:flex;gap:4px;margin-left:auto;
+  background:rgba(0,0,0,.32);border-radius:999px;padding:4px;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.4)}
+nav.links a{color:var(--muted);font-size:.87rem;font-weight:700;
   padding:8px 16px;border-radius:999px;transition:.25s}
 nav.links a:hover{color:#04150E;background:var(--grad)}
 @media(max-width:920px){nav.links{display:none}}
@@ -107,9 +126,10 @@ nav.links a:hover{color:#04150E;background:var(--grad)}
 .hero{min-height:100svh;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;
   align-items:center;padding:140px 0 90px;position:relative}
 @media(max-width:980px){.hero{grid-template-columns:1fr;padding-top:124px;min-height:auto}}
-.kicker{display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;
+.kicker{display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;
   color:var(--mint);font-size:.71rem;font-weight:800;letter-spacing:.18em;
-  background:rgba(61,242,155,.07);box-shadow:inset 0 0 0 1px rgba(61,242,155,.2)}
+  background:linear-gradient(160deg,rgba(61,242,155,.12),rgba(61,242,155,.04));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(61,242,155,.25)}
 .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);
   box-shadow:0 0 10px var(--mint);animation:pulse 2s infinite}
 @keyframes pulse{50%{opacity:.25}}
@@ -133,10 +153,14 @@ body.ready .fade.f3{transition-delay:.6s}
 .sub b{color:var(--text);font-weight:600}
 .cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
 .hero-meta{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
-.hero-meta span{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;
+.hero-meta span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;
   border-radius:999px;font-size:.79rem;font-weight:700;color:var(--muted);
-  background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-.hero-meta span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint)}
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.08);
+  transition:.3s var(--spring)}
+.hero-meta span:hover{transform:translateY(-3px);color:var(--mint)}
+.hero-meta span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 8px var(--mint)}
 .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
   color:var(--dim);font-size:.7rem;font-weight:800;letter-spacing:.3em;display:flex;
   flex-direction:column;align-items:center;gap:8px}
@@ -146,14 +170,13 @@ body.ready .fade.f3{transition-delay:.6s}
 55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 @media(max-height:700px){.scroll-hint{display:none}}
 
-/* ============ IPHONE ============ */
+/* ============ IPHONE (стеклянный экран) ============ */
 .phone-zone{display:flex;justify-content:center;perspective:1500px}
 .phone-float{animation:float 7s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-13px)}}
 .phone{width:300px;border-radius:54px;padding:11px;position:relative;
   background:linear-gradient(150deg,#2a2f2c,#0a0d0b 40%,#1a201d);
-  box-shadow:0 50px 100px rgba(0,0,0,.85),0 0 90px rgba(61,242,155,.1),
-    inset 0 1px 1px rgba(255,255,255,.3);
+  box-shadow:0 50px 100px rgba(0,0,0,.85),inset 0 1px 1px rgba(255,255,255,.3);
   transform-style:preserve-3d;will-change:transform;transition:transform .25s ease-out}
 .phone::before{content:'';position:absolute;inset:0;border-radius:54px;padding:1.5px;
   background:linear-gradient(150deg,rgba(255,255,255,.6),rgba(255,255,255,.05) 35%,rgba(255,255,255,.2));
@@ -180,15 +203,15 @@ body.ready .fade.f3{transition-delay:.6s}
   letter-spacing:.12em;color:var(--red);background:rgba(255,107,90,.12);padding:5px 10px;border-radius:999px}
 .scr-live i{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite}
 .scr-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px}
-.scr-card{background:rgba(255,255,255,.08);border-radius:19px;padding:11px 9px 10px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.scr-card{background:rgba(255,255,255,.09);border-radius:19px;padding:11px 9px 10px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(255,255,255,.04)}
 .scr-card i{font-style:normal;font-size:.5rem;color:var(--dim);letter-spacing:.1em;display:block;margin-bottom:4px}
 .scr-card b{font-size:.98rem;font-weight:800;font-variant-numeric:tabular-nums}
 .scr-card b.m{color:var(--mint)}.scr-card b.r{color:var(--red)}.scr-card b.g{color:var(--gold)}
 .scr-timer{text-align:center;font-size:2.5rem;font-weight:800;letter-spacing:-.02em;
   margin:8px 0 2px;font-variant-numeric:tabular-nums}
-.scr-panel{background:rgba(255,255,255,.07);border-radius:21px;padding:12px;margin-bottom:9px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.scr-panel{background:rgba(255,255,255,.08);border-radius:21px;padding:12px;margin-bottom:9px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
 .scr-panel .t{font-size:.55rem;letter-spacing:.13em;color:var(--dim);margin-bottom:9px;
   display:flex;justify-content:space-between}
 .scr-panel .t b{color:var(--mint)}
@@ -203,12 +226,10 @@ body.ready .bars span{transform:scaleY(1)}
 .scr-btn{background:var(--grad);border-radius:999px;padding:13px;text-align:center;
   font-weight:800;font-size:.86rem;color:#012517;margin-top:6px;
   box-shadow:0 8px 24px rgba(43,194,106,.45),inset 0 1px 0 rgba(255,255,255,.35)}
-.scr-btn2{border:1.2px solid rgba(255,255,255,.2);border-radius:999px;padding:12px;text-align:center;
-  font-weight:700;font-size:.8rem;color:var(--mint);margin-top:8px;background:rgba(255,255,255,.05)}
 .scr-tabs{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-around;
-  background:rgba(0,0,0,.62);border-radius:999px;padding:10px 0;font-size:1.05rem;
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  background:rgba(0,0,0,.55);border-radius:999px;padding:10px 0;font-size:1.05rem;
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
 .scr-tabs span{opacity:.35}.scr-tabs span.on{opacity:1;color:var(--mint)}
 .phone.mini{width:264px}
 .phone.mini .screen{min-height:512px}
@@ -234,26 +255,23 @@ h2 .mint{background:linear-gradient(115deg,#C6FFDF,#3DF29B 55%,#189459);
 .manifesto .w.accent.lit{background:linear-gradient(115deg,#C6FFDF,#3DF29B);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ============ ВОЗМОЖНОСТИ ============ */
+/* ============ ВОЗМОЖНОСТИ — стеклянный бенто ============ */
 .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:48px}
 .b{padding:28px 26px;border-radius:32px;will-change:transform}
 .b-xl{grid-column:span 7}.b-l{grid-column:span 5}
 .b-m{grid-column:span 4}
 @media(max-width:960px){.b-xl,.b-l,.b-m{grid-column:span 12}}
-.b::after{content:'';position:absolute;inset:0;border-radius:inherit;opacity:0;
-  transition:opacity .45s;pointer-events:none;
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(61,242,155,.09),transparent 65%)}
-.b:hover::after{opacity:1}
+.b:hover.tiltable{transform:translateY(-6px) perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
 .b .ic{width:50px;height:50px;border-radius:17px;display:flex;align-items:center;
   justify-content:center;font-size:1.35rem;margin-bottom:17px;
-  background:linear-gradient(140deg,rgba(61,242,155,.18),rgba(61,242,155,.04));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.16);transition:.45s var(--spring)}
+  background:linear-gradient(160deg,rgba(61,242,155,.2),rgba(61,242,155,.04));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 22px rgba(43,194,106,.16);transition:.45s var(--spring)}
 .b:hover .ic{transform:rotate(-9deg) scale(1.1)}
 .b h3{font-size:1.08rem;font-weight:800;margin-bottom:8px}
 .b p{color:var(--muted);font-size:.9rem;line-height:1.6}
 .b .tag{position:absolute;top:22px;right:22px;font-size:.58rem;font-weight:800;
   letter-spacing:.13em;color:var(--mint);padding:6px 12px;border-radius:999px;
-  background:rgba(61,242,155,.08)}
+  background:rgba(61,242,155,.09);box-shadow:inset 0 0 0 1px rgba(61,242,155,.25)}
 
 .route-svg{margin-top:18px;width:100%;height:100px}
 .route-svg .path{fill:none;stroke:url(#rg);stroke-width:3.4;stroke-linecap:round;
@@ -277,26 +295,27 @@ h2 .mint{background:linear-gradient(115deg,#C6FFDF,#3DF29B 55%,#189459);
 @keyframes wv{0%,100%{height:22%}50%{height:100%}}
 .wave.off i{animation-play-state:paused;opacity:.25}
 
-/* ============ ПУЛЬТ ============ */
+/* ============ ПУЛЬТ — стеклянные тумблеры ============ */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 @media(max-width:960px){.split{grid-template-columns:1fr;gap:40px}}
 .cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:520px){.cc-grid{grid-template-columns:1fr}}
-.cc{border-radius:22px;padding:15px 17px;display:flex;align-items:center;gap:12px;
-  background:rgba(255,255,255,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer;
+.cc{border-radius:22px;padding:15px 17px;display:flex;align-items:center;gap:12px;cursor:pointer;
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.06);
   transition:background .3s}
-.cc:hover{background:rgba(255,255,255,.08)}
+.cc:hover{background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.04))}
 .cc .cci{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(255,255,255,.08);
-  transition:.35s var(--spring)}
-.cc.on .cci{background:var(--grad);box-shadow:0 6px 16px rgba(43,194,106,.35)}
+  justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(255,255,255,.09);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16);transition:.35s var(--spring)}
+.cc.on .cci{background:var(--grad);box-shadow:0 6px 16px rgba(43,194,106,.35),inset 0 1px 0 rgba(255,255,255,.3)}
 .cc .cct{flex:1}
 .cc .cct b{font-size:.85rem;font-weight:800;display:block}
 .cc .cct span{font-size:.69rem;color:var(--dim);font-weight:600}
 .ios-sw{width:50px;height:30px;border-radius:999px;position:relative;flex-shrink:0;
   background:rgba(120,120,128,.4);box-shadow:inset 0 1px 3px rgba(0,0,0,.4);transition:.35s var(--ease)}
 .ios-sw .knob{position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;
-  background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.4);transition:left .35s var(--spring)}
+  background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.4),0 1px 1px rgba(0,0,0,.25);transition:left .35s var(--spring)}
 .ios-sw.on{background:var(--grad);box-shadow:0 4px 14px rgba(43,194,106,.35)}
 .ios-sw.on .knob{left:22px}
 
@@ -306,7 +325,8 @@ h2 .mint{background:linear-gradient(115deg,#C6FFDF,#3DF29B 55%,#189459);
 .checks li b{color:var(--text);font-weight:700}
 .checks li::before{content:'✓';color:#012517;font-weight:800;font-size:.68rem;
   width:22px;height:22px;border-radius:50%;background:var(--grad);flex-shrink:0;margin-top:2px;
-  display:inline-flex;align-items:center;justify-content:center}
+  display:inline-flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(43,194,106,.35)}
 
 /* ============ ШАГИ ============ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
@@ -322,8 +342,37 @@ h2 .mint{background:linear-gradient(115deg,#C6FFDF,#3DF29B 55%,#189459);
 .cta-final{text-align:center;border-radius:48px;padding:88px 28px;overflow:hidden}
 .cta-final h2{margin:0 auto 14px;max-width:none}
 .cta-final p{color:var(--muted);max-width:31rem;margin:0 auto 32px}
-.cta-final .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-final .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
 .cta-final .mini{margin-top:22px;color:var(--dim);font-size:.8rem}
+
+/* ============ ОБНОВЛЕНИЯ (verro.txt) ============ */
+.cl{border-radius:30px;padding:26px 28px;margin-bottom:14px}
+.cl .cl-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.cl .cl-ver{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:800;font-size:.85rem;
+  color:#012517;background:var(--grad);padding:5px 13px;border-radius:999px;
+  box-shadow:0 6px 18px rgba(43,194,106,.3),inset 0 1px 0 rgba(255,255,255,.35)}
+.cl .cl-title{font-weight:800;font-size:1.02rem}
+.cl .cl-latest{font-size:.6rem;font-weight:800;letter-spacing:.14em;color:var(--mint);
+  box-shadow:inset 0 0 0 1px rgba(61,242,155,.35);border-radius:999px;padding:4px 10px;
+  background:rgba(61,242,155,.07)}
+.cl ul{list-style:none;margin-top:14px;display:grid;gap:8px}
+.cl li{position:relative;padding-left:20px;color:var(--muted);font-size:.9rem;line-height:1.5}
+.cl li::before{content:'';position:absolute;left:2px;top:.5em;width:7px;height:7px;border-radius:50%;
+  background:var(--mint);box-shadow:0 0 8px rgba(61,242,155,.5)}
+.cl.old{display:none}
+#changelog.show-all .cl.old{display:block}
+.chk{display:inline-flex;align-items:center;gap:11px;margin-top:10px;cursor:pointer;user-select:none;
+  padding:12px 20px;border-radius:999px;
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.1);
+  font-size:.88rem;font-weight:700;color:var(--muted);transition:.3s}
+.chk:hover{color:var(--text);transform:translateY(-2px)}
+.chk input{display:none}
+.chk .box{width:22px;height:22px;border-radius:8px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.28);
+  display:flex;align-items:center;justify-content:center;transition:.25s;flex-shrink:0}
+.chk input:checked + .box{background:var(--grad);box-shadow:0 4px 14px rgba(43,194,106,.4),inset 0 1px 0 rgba(255,255,255,.35)}
+.chk .box::after{content:'✓';color:#012517;font-size:.75rem;font-weight:900;opacity:0;transform:scale(.4);transition:.25s var(--spring)}
+.chk input:checked + .box::after{opacity:1;transform:scale(1)}
 
 /* ============ ФУТЕР ============ */
 footer{padding:40px 0 56px}
@@ -333,7 +382,7 @@ footer{padding:40px 0 56px}
 .f-brand svg{width:32px;height:32px;border-radius:11px}
 .f-meta{color:var(--dim);font-size:.8rem}
 .f-links{display:flex;gap:4px}
-.f-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:700;
+.f-links a{color:var(--muted);font-size:.82rem;font-weight:700;
   padding:8px 14px;border-radius:999px;transition:.25s}
 .f-links a:hover{color:var(--mint);background:rgba(61,242,155,.09)}
 .mega{display:flex;justify-content:center;gap:.03em;user-select:none;
@@ -342,32 +391,6 @@ footer{padding:40px 0 56px}
   transition:.45s var(--spring);display:inline-block}
 .mega span:hover{color:var(--mint);-webkit-text-stroke-color:transparent;transform:translateY(-10px)}
 
-/* ============ ОБНОВЛЕНИЯ (verro.txt) ============ */
-.cl{border-radius:30px;padding:26px 28px;margin-bottom:14px}
-.cl .cl-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-.cl .cl-ver{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:800;font-size:.85rem;
-  color:#012517;background:var(--grad);padding:5px 13px;border-radius:999px;
-  box-shadow:0 6px 18px rgba(43,194,106,.3)}
-.cl .cl-title{font-weight:800;font-size:1.02rem}
-.cl .cl-latest{font-size:.6rem;font-weight:800;letter-spacing:.14em;color:var(--mint);
-  box-shadow:inset 0 0 0 1px rgba(61,242,155,.35);border-radius:999px;padding:4px 10px}
-.cl ul{list-style:none;margin-top:14px;display:grid;gap:8px}
-.cl li{position:relative;padding-left:20px;color:var(--muted);font-size:.9rem;line-height:1.5}
-.cl li::before{content:'';position:absolute;left:2px;top:.5em;width:7px;height:7px;border-radius:50%;
-  background:var(--mint);box-shadow:0 0 8px rgba(61,242,155,.5)}
-.cl.old{display:none}
-#changelog.show-all .cl.old{display:block}
-.chk{display:inline-flex;align-items:center;gap:11px;margin-top:10px;cursor:pointer;user-select:none;
-  padding:12px 20px;border-radius:999px;background:rgba(255,255,255,.05);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.13),inset 0 1px 0 rgba(255,255,255,.1);
-  font-size:.88rem;font-weight:700;color:var(--muted);transition:.3s}
-.chk:hover{color:var(--text);background:rgba(61,242,155,.07)}
-.chk input{display:none}
-.chk .box{width:22px;height:22px;border-radius:8px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.28);
-  display:flex;align-items:center;justify-content:center;transition:.25s;flex-shrink:0}
-.chk input:checked + .box{background:var(--grad);box-shadow:0 4px 14px rgba(43,194,106,.4),inset 0 1px 0 rgba(255,255,255,.35)}
-.chk .box::after{content:'✓';color:#012517;font-size:.75rem;font-weight:900;opacity:0;transform:scale(.4);transition:.25s var(--spring)}
-.chk input:checked + .box::after{opacity:1;transform:scale(1)}
 /* ============ ПОЯВЛЕНИЕ ============ */
 .rv{opacity:0;transform:translateY(30px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
 .rv.on{opacity:1;transform:none}
@@ -416,7 +439,7 @@ footer{padding:40px 0 56px}
       <a href="#features">Возможности</a>
       <a href="#control">Пульт</a>
       <a href="#indoor">Без GPS</a>
-      <a href="#install">Установка</a>
+      <a href="#updates">Обновления</a>
     </nav>
     <a class="btn primary small" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>Скачать APK</a>
   </div>
@@ -427,7 +450,7 @@ footer{padding:40px 0 56px}
   <!-- HERO -->
   <section class="hero" id="top">
     <div>
-      <span class="kicker fade"><span class="dot"></span>VERRO 3.0 · БЕЗ АККАУНТОВ И ОБЛАКОВ</span>
+      <span class="kicker fade"><span class="dot"></span>VERRO 3.2 · БЕЗ АККАУНТОВ И ОБЛАКОВ</span>
       <h1>
         <span class="line d1"><span class="line-in">Тренируйся</span></span>
         <span class="line d2"><span class="line-in mint">свободно.</span></span>
@@ -441,7 +464,7 @@ footer{padding:40px 0 56px}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Скачать APK · 80 МБ
         </a>
-        <a class="btn ghost" href="#features" data-magnet>Возможности</a>
+        <a class="btn glassb" href="#features" data-magnet>Возможности</a>
       </div>
       <div class="hero-meta fade f3">
         <span>Android 8.0+</span><span>Бесплатно</span><span>GPS телефона</span><span>Работа в фоне</span><span>100% офлайн</span>
@@ -509,7 +532,7 @@ footer{padding:40px 0 56px}
     <p class="sec-sub rv d1">Трекинг, датчики, анализ и экспорт — в одном приложении, полностью офлайн.</p>
 
     <div class="bento">
-      <div class="b lg b-xl rv" data-tilt id="gpsCard">
+      <div class="b glass tiltable b-xl rv" data-spot id="gpsCard">
         <span class="tag">ФИЛЬТР КАЛМАНА</span>
         <div class="ic">🛰️</div>
         <h3>GPS-трек с телефона</h3>
@@ -525,7 +548,7 @@ footer{padding:40px 0 56px}
         </svg>
       </div>
 
-      <div class="b lg b-l rv d1" data-tilt>
+      <div class="b glass tiltable b-l rv d1" data-spot>
         <span class="tag">BLE · HR / CSC</span>
         <div class="ic">❤️</div>
         <h3>Пульс в реальном времени</h3>
@@ -537,7 +560,7 @@ footer{padding:40px 0 56px}
         <div class="hr-live"><b>152</b><span>уд/мин · зона 3</span></div>
       </div>
 
-      <div class="b lg b-m rv" data-tilt>
+      <div class="b glass tiltable b-m rv" data-spot>
         <div class="ic">🗣️</div>
         <h3>Голосовой тренер</h3>
         <p>Километры, темп, пульс и похвала — русским голосом, офлайн.</p>
@@ -550,26 +573,26 @@ footer{padding:40px 0 56px}
         </div>
       </div>
 
-      <div class="b lg b-m rv d1" data-tilt>
+      <div class="b glass tiltable b-m rv d1" data-spot>
         <div class="ic">🏠</div>
         <h3>Режим «в помещении»</h3>
         <p>Тренировка без GPS за секунду: таймер, калории по пульсу, ваши датчики.</p>
       </div>
 
-      <div class="b lg b-m rv d2" data-tilt>
+      <div class="b glass tiltable b-m rv d2" data-spot>
         <div class="ic">🎬</div>
         <h3>3D-реплеи</h3>
         <p>Кинематографичный облёт трека в 3D и экспорт видео.</p>
       </div>
 
-      <div class="b lg b-l rv d2" data-tilt>
+      <div class="b glass tiltable b-l rv d2" data-spot>
         <div class="ic">🛟</div>
         <h3>Детектор падения и SOS</h3>
         <p>Резкая остановка включает отсчёт: не ответили — VERRO отправит SMS
         с координатами близким. Плюс таймер «на связи».</p>
       </div>
 
-      <div class="b lg b-m rv d3" data-tilt>
+      <div class="b glass tiltable b-m rv d3" data-spot>
         <div class="ic">📦</div>
         <h3>Данные — ваши</h3>
         <p>База только на телефоне. Экспорт куда угодно, удаление одним касанием.</p>
@@ -586,7 +609,7 @@ footer{padding:40px 0 56px}
         <p class="sec-sub rv d1">Голос тренера, автопауза, детектор падения — включаются
         одним касанием. Попробуйте переключатели — они рабочие.</p>
       </div>
-      <div class="lg rv d2" style="border-radius:36px;padding:24px">
+      <div class="glass rv d2" style="border-radius:36px;padding:24px">
         <div class="cc-grid">
           <div class="cc on" role="switch" aria-checked="true" data-fx="wave">
             <span class="cci">🗣️</span>
@@ -632,7 +655,7 @@ footer{padding:40px 0 56px}
       </div>
       <div class="phone-zone rv d2" style="justify-content:center">
         <div class="phone-float" style="animation-delay:1.2s">
-          <div class="phone mini" data-tilt>
+          <div class="phone mini">
             <span class="btn-side vol1"></span><span class="btn-side vol2"></span><span class="btn-side pwr"></span>
             <div class="screen" style="padding-bottom:64px">
               <div class="gloss"></div>
@@ -673,31 +696,31 @@ footer{padding:40px 0 56px}
     <div class="slabel rv">Установка</div>
     <h2 class="rv">Три шага — <span class="mint">и вы на треке</span></h2>
     <div class="steps">
-      <div class="step lg rv" data-tilt><div class="n">1</div><h3>Скачайте APK</h3>
+      <div class="step glass rv"><div class="n">1</div><h3>Скачайте APK</h3>
         <p>Кнопка ниже — файл около 80 МБ. Android 8.0 или новее.</p></div>
-      <div class="step lg rv d1" data-tilt><div class="n">2</div><h3>Разрешите установку</h3>
+      <div class="step glass rv d1"><div class="n">2</div><h3>Разрешите установку</h3>
         <p>Android один раз спросит про «неизвестные источники» — подтвердите.</p></div>
-      <div class="step lg rv d2" data-tilt><div class="n">3</div><h3>Дайте разрешения</h3>
+      <div class="step glass rv d2"><div class="n">3</div><h3>Дайте разрешения</h3>
         <p>Геолокация и активность — для трекинга. Bluetooth — только для датчиков.</p></div>
     </div>
   </section>
 
   <!-- CTA -->
   <section>
-    <div class="cta-final lg rv">
+    <div class="cta-final glass rv">
       <h2>Первая тренировка — <span class="mint">в одну кнопку</span></h2>
-      <p>Скачайте VERRO 3.0 бесплатно. Всё, что вы запишете, останется на вашем телефоне.</p>
+      <p>Скачайте VERRO 3.2 бесплатно. Всё, что вы запишете, останется на вашем телефоне.</p>
       <div class="row">
         <a class="btn primary" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Скачать VERRO 3.0 · бесплатно
+          Скачать VERRO 3.2 · бесплатно
         </a>
       </div>
-      <div class="mini">Android 8.0+ · ~80 МБ · версия 3.0.0 (6)</div>
+      <div class="mini">Android 8.0+ · ~80 МБ · версия 3.2.0 (8)</div>
     </div>
   </section>
 
-  <!-- ============ ОБНОВЛЕНИЯ (читается из verro.txt) ============ -->
+  <!-- ОБНОВЛЕНИЯ (читается из verro.txt) -->
   <section id="updates">
     <div class="slabel rv">Обновления</div>
     <h2 class="rv">Что нового <span class="mint">в приложении</span></h2>
@@ -713,7 +736,7 @@ footer{padding:40px 0 56px}
 <!-- ФУТЕР -->
 <footer>
   <div class="wrap">
-    <div class="foot lg">
+    <div class="foot glass">
       <div class="f-brand">
         <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
           <defs><linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
@@ -730,44 +753,12 @@ footer{padding:40px 0 56px}
         </svg>
         VERRO
       </div>
-      <div class="f-links"><a href="#features">Возможности</a><a href="#indoor">Без GPS</a><a href="#install">Установка</a></div>
+      <div class="f-links"><a href="#features">Возможности</a><a href="#indoor">Без GPS</a><a href="#updates">Обновления</a></div>
       <div class="f-meta">© 2026 VERRO · Россия</div>
     </div>
     <div class="mega" aria-hidden="true"><span>V</span><span>E</span><span>R</span><span>R</span><span>O</span></div>
   </div>
 </footer>
-
-<script type="text/plain" id="clFallback">
-3.0.0 (6) — Финальная версия
-- Исправлен запуск тренировок: восстановлена связь приложения с сервисом трекинга
-- Новая вкладка «Все функции»: все 37 функций с поиском и описаниями
-- Надёжная работа в фоне: тренировка в помещении тоже живёт в foreground-сервисе
-- Приложение больше не падает, если свайпнуть его из недавних
-- Кнопки «Пауза» и «Стоп» в уведомлении реально управляют тренировкой
-- Стеклянный стиль: blur-эффекты в навигации и на экране тренировки
-- Исправлен блок, перекрывавший стартовый экран
-- Ускоренный запуск: сервисы загружаются параллельно
-
-2.0.1 (5) — GPS телефона
-- Подсказка, если геолокация выключена: «Опустите шторку и включите GPS»
-- Бейдж «🛰 GPS телефона» с живой точностью в метрах
-- Кнопка «Настройки» в диалоге ошибки GPS
-- GPS-трек берётся со встроенного приёмника телефона, без внешних трекеров
-
-2.0.0 (4) — Новый стиль
-- Премиальный тёмно-изумрудный интерфейс: стекло и мягкие свечения
-- Новый стартовый экран с огоньком
-
-1.2.0 (3) — Режим «в помещении»
-- Тренировка без GPS: таймер, калории по пульсу, блютуз-датчики
-
-1.1.0 (2) — Датчики и права
-- Пульсометры и велокаденс по блютуз
-- Экран, всегда активный во время тренировки
-
-1.0.0 (1) — Первый релиз
-- GPS-трекинг с фильтром Калмана, история, челленджи, 3D-реплеи
-</script>
 
 <noscript><style>.rv,.fade{opacity:1;transform:none}h1 .line-in{transform:none}#loader{display:none}</style></noscript>
 
@@ -799,7 +790,7 @@ if(FINE&&!REDUCED){
   addEventListener('mousemove',e=>{
     mx=e.clientX;my=e.clientY;
     d.style.transform=`translate(${mx}px,${my}px)`;
-    r.classList.toggle('big',!!e.target.closest('a,.cc,[data-tilt]'));
+    r.classList.toggle('big',!!e.target.closest('a,.cc,.glass'));
   },{passive:true});
   (function loop(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;
     r.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop)})();
@@ -807,7 +798,6 @@ if(FINE&&!REDUCED){
 
 /* ===== магнитные кнопки ===== */
 if(FINE&&!REDUCED)document.querySelectorAll('[data-magnet]').forEach(el=>{
-  el.style.transition='box-shadow .4s var(--ease),transform .35s var(--spring)';
   el.addEventListener('mousemove',e=>{const b=el.getBoundingClientRect();
     const x=(e.clientX-b.left-b.width/2)*.22,y=(e.clientY-b.top-b.height/2)*.32;
     el.style.transform=`translate(${x}px,${y}px)`});
@@ -818,27 +808,28 @@ if(FINE&&!REDUCED)document.querySelectorAll('[data-magnet]').forEach(el=>{
 (function(){
   const zone=document.getElementById('phoneZone'),ph=document.getElementById('phone');
   if(!zone||!FINE||REDUCED)return;
-  let tx=0,ty=0,cx=0,cy=0,hover=false;
+  let tx=0,ty=0,cx=0,cy=0;
   zone.addEventListener('mousemove',e=>{const r=zone.getBoundingClientRect();
-    tx=((e.clientX-r.left)/r.width-.5)*14;ty=-((e.clientY-r.top)/r.height-.5)*11;hover=true});
-  zone.addEventListener('mouseleave',()=>{tx=0;ty=0;hover=false});
+    tx=((e.clientX-r.left)/r.width-.5)*14;ty=-((e.clientY-r.top)/r.height-.5)*11});
+  zone.addEventListener('mouseleave',()=>{tx=0;ty=0});
   (function loop(){cx+=(tx-cx)*.09;cy+=(ty-cy)*.09;
     ph.style.transform=`rotateY(${cx}deg) rotateX(${cy}deg)`;
     requestAnimationFrame(loop)})();
 })();
 
-/* ===== карточки: tilt + прожектор ===== */
-if(FINE&&!REDUCED)document.querySelectorAll('[data-tilt]').forEach(card=>{
-  card.style.transition='transform .3s ease-out';
+/* ===== стеклянные карточки: блик под курсором + лёгкий наклон ===== */
+if(FINE&&!REDUCED)document.querySelectorAll('[data-spot]').forEach(card=>{
   card.addEventListener('mousemove',e=>{
     const b=card.getBoundingClientRect();
     const dx=(e.clientX-b.left)/b.width-.5,dy=(e.clientY-b.top)/b.height-.5;
     card.style.setProperty('--mx',(e.clientX-b.left)+'px');
     card.style.setProperty('--my',(e.clientY-b.top)+'px');
-    if(!card.classList.contains('phone'))
-      card.style.transform=`translateY(-6px) perspective(900px) rotateX(${-dy*5}deg) rotateY(${dx*5}deg)`;
+    card.style.setProperty('--rx',(-dy*4)+'deg');
+    card.style.setProperty('--ry',(dx*4)+'deg');
   });
-  card.addEventListener('mouseleave',()=>{card.style.transform=''});
+  card.addEventListener('mouseleave',()=>{
+    card.style.setProperty('--rx','0deg');card.style.setProperty('--ry','0deg');
+  });
 });
 
 /* ===== появление при скролле ===== */
@@ -863,9 +854,10 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   },{passive:true});
 })();
 
-/* ===== шапка при скролле ===== */
+/* ===== шапка при скролле — чуть плотнее ===== */
 addEventListener('scroll',()=>{
-  document.getElementById('hdr').classList.toggle('sc',scrollY>30);
+  const hdr=document.getElementById('hdr');
+  hdr.style.opacity=scrollY>30?'1':'.98';
 },{passive:true});
 
 /* ===== iOS-переключатели ===== */
@@ -881,7 +873,7 @@ document.querySelectorAll('.cc').forEach(cc=>{
 
 /* ===== Обновления из verro.txt ===== */
 (async function(){
-  const FALLBACK=document.getElementById('clFallback').textContent.trim();
+  const FALLBACK=document.getElementById('clFallback')?.textContent.trim()||'';
   let txt=FALLBACK;
   try{
     const r=await fetch('verro.txt',{cache:'no-store'});
@@ -896,7 +888,7 @@ document.querySelectorAll('.cc').forEach(cc=>{
   });
   const box=document.getElementById('changelog');
   box.innerHTML=rels.map((r,i)=>`
-    <div class="cl lg${i===0?'':' old'}">
+    <div class="cl glass${i===0?'':' old'}">
       <div class="cl-head">
         <span class="cl-ver">${r.ver}</span>
         <span class="cl-title">${r.title}</span>
@@ -937,5 +929,52 @@ document.querySelectorAll('.cc').forEach(cc=>{
   },900);
 })();
 </script>
-</body>
+
+<script type="text/plain" id="clFallback">
+3.2.0 (8) — Стеклянный редизайн
+- Новый интерфейс Liquid Glass: стеклянные панели с бликами и светлыми гранями
+- Глубокий чёрно-изумрудный фон, как на сайте
+- Кнопки-пилюли, стеклянные карточки и переключатели
+- Все экраны перерисованы в едином стеклянном стиле
+
+3.1.0 (7) — Антикраш и сохранение всего
+- Исправлены причины вылетов: защита всех опасных мест приложения
+- Каждая тренировка сохраняется — даже короткая или без GPS
+- Автосохранение черновика каждые 30 секунд: если приложение закроется само — тренировка восстановится при запуске
+- Стеклянная навигация и панель кнопок (эффект blur)
+- Вкладка «Все функции»: каталог всех 37 функций с поиском
+- Кнопки «Пауза/Стоп» в уведомлении управляют тренировкой
+- Надёжный фоновый режим: тренировка живёт при выключенном экране и свайпе приложения
+
+3.0.0 (6) — Финальная версия
+- Исправлен запуск тренировок: восстановлена связь приложения с сервисом трекинга
+- Новая вкладка «Все функции»: все 37 функций с поиском и описаниями
+- Надёжная работа в фоне: тренировка в помещении тоже живёт в foreground-сервисе
+- Приложение больше не падает, если свайпнуть его из недавних
+- Кнопки «Пауза» и «Стоп» в уведомлении реально управляют тренировкой
+- Стеклянный стиль: blur-эффекты в навигации и на экране тренировки
+- Исправлен блок, перекрывавший стартовый экран
+- Ускоренный запуск: сервисы загружаются параллельно
+
+2.0.1 (5) — GPS телефона
+- Подсказка, если геолокация выключена: «Опустите шторку и включите GPS»
+- Бейдж «🛰 GPS телефона» с живой точностью в метрах
+- Кнопка «Настройки» в диалоге ошибки GPS
+- GPS-трек берётся со встроенного приёмника телефона, без внешних трекеров
+
+2.0.0 (4) — Новый стиль
+- Премиальный тёмно-изумрудный интерфейс: стекло и мягкие свечения
+- Новый стартовый экран с огоньком
+
+1.2.0 (3) — Режим «в помещении»
+- Тренировка без GPS: таймер, калории по пульсу, блютуз-датчики
+
+1.1.0 (2) — Датчики и права
+- Пульсометры и велокаденс по блютуз
+- Экран, всегда активный во время тренировки
+
+1.0.0 (1) — Первый релиз
+- GPS-трекинг с фильтром Калмана, история, челленджи, 3D-реплеи
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d0fd5ee8cef78c',t:'MTc4OTc0MTIwOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
