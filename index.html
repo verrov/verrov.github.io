@@ -342,6 +342,32 @@ footer{padding:40px 0 56px}
   transition:.45s var(--spring);display:inline-block}
 .mega span:hover{color:var(--mint);-webkit-text-stroke-color:transparent;transform:translateY(-10px)}
 
+/* ============ ОБНОВЛЕНИЯ (verro.txt) ============ */
+.cl{border-radius:30px;padding:26px 28px;margin-bottom:14px}
+.cl .cl-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.cl .cl-ver{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:800;font-size:.85rem;
+  color:#012517;background:var(--grad);padding:5px 13px;border-radius:999px;
+  box-shadow:0 6px 18px rgba(43,194,106,.3)}
+.cl .cl-title{font-weight:800;font-size:1.02rem}
+.cl .cl-latest{font-size:.6rem;font-weight:800;letter-spacing:.14em;color:var(--mint);
+  box-shadow:inset 0 0 0 1px rgba(61,242,155,.35);border-radius:999px;padding:4px 10px}
+.cl ul{list-style:none;margin-top:14px;display:grid;gap:8px}
+.cl li{position:relative;padding-left:20px;color:var(--muted);font-size:.9rem;line-height:1.5}
+.cl li::before{content:'';position:absolute;left:2px;top:.5em;width:7px;height:7px;border-radius:50%;
+  background:var(--mint);box-shadow:0 0 8px rgba(61,242,155,.5)}
+.cl.old{display:none}
+#changelog.show-all .cl.old{display:block}
+.chk{display:inline-flex;align-items:center;gap:11px;margin-top:10px;cursor:pointer;user-select:none;
+  padding:12px 20px;border-radius:999px;background:rgba(255,255,255,.05);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.13),inset 0 1px 0 rgba(255,255,255,.1);
+  font-size:.88rem;font-weight:700;color:var(--muted);transition:.3s}
+.chk:hover{color:var(--text);background:rgba(61,242,155,.07)}
+.chk input{display:none}
+.chk .box{width:22px;height:22px;border-radius:8px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.28);
+  display:flex;align-items:center;justify-content:center;transition:.25s;flex-shrink:0}
+.chk input:checked + .box{background:var(--grad);box-shadow:0 4px 14px rgba(43,194,106,.4),inset 0 1px 0 rgba(255,255,255,.35)}
+.chk .box::after{content:'✓';color:#012517;font-size:.75rem;font-weight:900;opacity:0;transform:scale(.4);transition:.25s var(--spring)}
+.chk input:checked + .box::after{opacity:1;transform:scale(1)}
 /* ============ ПОЯВЛЕНИЕ ============ */
 .rv{opacity:0;transform:translateY(30px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
 .rv.on{opacity:1;transform:none}
@@ -392,7 +418,7 @@ footer{padding:40px 0 56px}
       <a href="#indoor">Без GPS</a>
       <a href="#install">Установка</a>
     </nav>
-    <a class="btn primary small" href="verro.apk" download data-magnet>Скачать APK</a>
+    <a class="btn primary small" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>Скачать APK</a>
   </div>
 </header>
 
@@ -401,7 +427,7 @@ footer{padding:40px 0 56px}
   <!-- HERO -->
   <section class="hero" id="top">
     <div>
-      <span class="kicker fade"><span class="dot"></span>VERRO 2.0 · БЕЗ АККАУНТОВ И ОБЛАКОВ</span>
+      <span class="kicker fade"><span class="dot"></span>VERRO 3.0 · БЕЗ АККАУНТОВ И ОБЛАКОВ</span>
       <h1>
         <span class="line d1"><span class="line-in">Тренируйся</span></span>
         <span class="line d2"><span class="line-in mint">свободно.</span></span>
@@ -411,14 +437,14 @@ footer{padding:40px 0 56px}
       <b>GPS-трек с телефона, пульсометры, 3D-реплеи</b> и голосовой тренер —
       всё на вашем устройстве.</p>
       <div class="cta fade f2">
-        <a class="btn primary" href="verro.apk" download data-magnet>
+        <a class="btn primary" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Скачать APK · 80 МБ
         </a>
         <a class="btn ghost" href="#features" data-magnet>Возможности</a>
       </div>
       <div class="hero-meta fade f3">
-        <span>Android 8.0+</span><span>Бесплатно</span><span>GPS телефона</span><span>100% офлайн</span>
+        <span>Android 8.0+</span><span>Бесплатно</span><span>GPS телефона</span><span>Работа в фоне</span><span>100% офлайн</span>
       </div>
     </div>
 
@@ -601,7 +627,7 @@ footer{padding:40px 0 56px}
           <li><b>Датчики по желанию</b> — пульс и каденс работают везде</li>
         </ul>
         <div class="cta rv d3" style="margin-top:28px">
-          <a class="btn primary" href="verro.apk" download data-magnet>Попробовать сейчас</a>
+          <a class="btn primary" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>Попробовать сейчас</a>
         </div>
       </div>
       <div class="phone-zone rv d2" style="justify-content:center">
@@ -660,15 +686,27 @@ footer{padding:40px 0 56px}
   <section>
     <div class="cta-final lg rv">
       <h2>Первая тренировка — <span class="mint">в одну кнопку</span></h2>
-      <p>Скачайте VERRO 2.0 бесплатно. Всё, что вы запишете, останется на вашем телефоне.</p>
+      <p>Скачайте VERRO 3.0 бесплатно. Всё, что вы запишете, останется на вашем телефоне.</p>
       <div class="row">
-        <a class="btn primary" href="verro.apk" download data-magnet>
+        <a class="btn primary" href="https://drive.google.com/file/d/1rJkxsQ67meg7OVU2g7tv7RUhKNnMKNhp/view?usp=drive_link" target="_blank" rel="noopener" data-magnet>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Скачать VERRO 2.0 · бесплатно
+          Скачать VERRO 3.0 · бесплатно
         </a>
       </div>
-      <div class="mini">Android 8.0+ · ~80 МБ · версия 2.0.1 (5)</div>
+      <div class="mini">Android 8.0+ · ~80 МБ · версия 3.0.0 (6)</div>
     </div>
+  </section>
+
+  <!-- ============ ОБНОВЛЕНИЯ (читается из verro.txt) ============ -->
+  <section id="updates">
+    <div class="slabel rv">Обновления</div>
+    <h2 class="rv">Что нового <span class="mint">в приложении</span></h2>
+    <div id="changelog" class="rv d1" style="margin-top:28px"></div>
+    <label class="chk rv d2">
+      <input type="checkbox" id="showAll">
+      <span class="box"></span>
+      <span id="chkLabel">Показать все версии</span>
+    </label>
   </section>
 </main>
 
@@ -698,6 +736,38 @@ footer{padding:40px 0 56px}
     <div class="mega" aria-hidden="true"><span>V</span><span>E</span><span>R</span><span>R</span><span>O</span></div>
   </div>
 </footer>
+
+<script type="text/plain" id="clFallback">
+3.0.0 (6) — Финальная версия
+- Исправлен запуск тренировок: восстановлена связь приложения с сервисом трекинга
+- Новая вкладка «Все функции»: все 37 функций с поиском и описаниями
+- Надёжная работа в фоне: тренировка в помещении тоже живёт в foreground-сервисе
+- Приложение больше не падает, если свайпнуть его из недавних
+- Кнопки «Пауза» и «Стоп» в уведомлении реально управляют тренировкой
+- Стеклянный стиль: blur-эффекты в навигации и на экране тренировки
+- Исправлен блок, перекрывавший стартовый экран
+- Ускоренный запуск: сервисы загружаются параллельно
+
+2.0.1 (5) — GPS телефона
+- Подсказка, если геолокация выключена: «Опустите шторку и включите GPS»
+- Бейдж «🛰 GPS телефона» с живой точностью в метрах
+- Кнопка «Настройки» в диалоге ошибки GPS
+- GPS-трек берётся со встроенного приёмника телефона, без внешних трекеров
+
+2.0.0 (4) — Новый стиль
+- Премиальный тёмно-изумрудный интерфейс: стекло и мягкие свечения
+- Новый стартовый экран с огоньком
+
+1.2.0 (3) — Режим «в помещении»
+- Тренировка без GPS: таймер, калории по пульсу, блютуз-датчики
+
+1.1.0 (2) — Датчики и права
+- Пульсометры и велокаденс по блютуз
+- Экран, всегда активный во время тренировки
+
+1.0.0 (1) — Первый релиз
+- GPS-трекинг с фильтром Калмана, история, челленджи, 3D-реплеи
+</script>
 
 <noscript><style>.rv,.fade{opacity:1;transform:none}h1 .line-in{transform:none}#loader{display:none}</style></noscript>
 
@@ -809,6 +879,38 @@ document.querySelectorAll('.cc').forEach(cc=>{
   });
 });
 
+/* ===== Обновления из verro.txt ===== */
+(async function(){
+  const FALLBACK=document.getElementById('clFallback').textContent.trim();
+  let txt=FALLBACK;
+  try{
+    const r=await fetch('verro.txt',{cache:'no-store'});
+    if(r.ok){const t=(await r.text()).trim(); if(t) txt=t;}
+  }catch(e){/* превью/файл без сервера — встроенная копия */}
+  const rels=[];let cur=null;
+  txt.split(/\r?\n/).forEach(raw=>{
+    const line=raw.trim();if(!line)return;
+    const m=line.match(/^(\d+\.\d+(?:\.\d+)?\s*\(\d+\))\s*[—–-]?\s*(.*)$/);
+    if(m){cur={ver:m[1],title:m[2].trim(),items:[]};rels.push(cur)}
+    else if(cur&&line.startsWith('-'))cur.items.push(line.replace(/^[-•*]\s*/,'').trim());
+  });
+  const box=document.getElementById('changelog');
+  box.innerHTML=rels.map((r,i)=>`
+    <div class="cl lg${i===0?'':' old'}">
+      <div class="cl-head">
+        <span class="cl-ver">${r.ver}</span>
+        <span class="cl-title">${r.title}</span>
+        ${i===0?'<span class="cl-latest">АКТУАЛЬНАЯ</span>':''}
+      </div>
+      ${r.items.length?`<ul>${r.items.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}
+    </div>`).join('');
+  const cb=document.getElementById('showAll'),lab=document.getElementById('chkLabel');
+  cb.addEventListener('change',()=>{
+    box.classList.toggle('show-all',cb.checked);
+    lab.textContent=cb.checked?'Скрыть старые версии':'Показать все версии';
+  });
+})();
+
 /* ===== живые данные телефонов ===== */
 (function(){
   let s1=12*60+47,s2=24*60+18,km=3.42,c1=287,c2=318;
@@ -835,5 +937,5 @@ document.querySelectorAll('.cc').forEach(cc=>{
   },900);
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3cfe9fd0b2b9da9',t:'MTc4OTcyOTkyOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
